@@ -15,12 +15,12 @@ int main()
     cout.tie(0);
     int n;
     cin >> n;
-    vector<int> k;
+    multiset<int> k;
     for (int i = 0; i < n; i++)
     {
         int x;
         cin >> x;
-        int l = upper_bound(all(k), x) - k.begin();
+        auto l = k.upper_bound(x);
         // finding upper bound using binary search
         //  int l = 0, r = k.size();
         //  while (l < r)
@@ -31,10 +31,13 @@ int main()
         //      else
         //          l = mid + 1;
         //  }
-        if (l == k.size())
-            k.push_back(x);
+        if (l == k.end())
+            k.insert(x);
         else
-            k[l] = x;
+        {
+            k.erase(l);
+            k.insert(x);
+        }
     }
     cout << k.size();
     return 0;
